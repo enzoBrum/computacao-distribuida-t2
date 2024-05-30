@@ -1,16 +1,13 @@
 package tuple_space;
 
-import org.jgroups.JChannel;
-import org.jgroups.Message;
-import org.jgroups.ReceiverAdapter;
-import org.jgroups.View;
+import org.jgroups.*;
 import org.jgroups.util.Util;
 
 import java.io.*;
 import java.util.List;
 import java.util.LinkedList;
 
-public class Main extends ReceiverAdapter {
+public class SimpleChat implements Receiver {
     JChannel channel;
     String user_name=System.getProperty("user.name", "n/a");
     final List<String> state=new LinkedList<>();
@@ -33,7 +30,6 @@ public class Main extends ReceiverAdapter {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public void setState(InputStream input) throws Exception {
         List<String> list=Util.objectFromStream(new DataInputStream(input));
         synchronized(state) {
@@ -63,7 +59,7 @@ public class Main extends ReceiverAdapter {
                     break;
                 }
                 line="[" + user_name + "] " + line;
-                Message msg=new Message(null, line);
+                Message msg=new ObjectMessage(null, line);
                 channel.send(msg);
             }
             catch(Exception e) {
@@ -73,6 +69,6 @@ public class Main extends ReceiverAdapter {
 
 
     public static void main(String[] args) throws Exception {
-        new Main().start();
+        new SimpleChat().start();
     }
 }
