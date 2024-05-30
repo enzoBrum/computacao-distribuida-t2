@@ -1,4 +1,4 @@
-package org.ufsc;
+package tuple_space;
 
 import org.jgroups.JChannel;
 import org.jgroups.Message;
