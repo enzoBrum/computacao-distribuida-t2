@@ -1,21 +1,21 @@
 Use esses dois comandos.
 ```bash
-docker build -t distribuida-tuple-space .
-docker run --rm -it distribuida-tuple-space
+make build # builda os contâineres
+make server # levanta uma instância do espaço de tuplas
+make client # levanta um client.
 ```
 
 ## TODO
 
-### Tuple Spaces
 - [x] Como rodar jgroups no docker?
-- [ ] Eleição do Líder
-- [ ] Envio de mensagens seguindo a ordem FIFO
-- [ ] Recuperação de erros em caso de falha do líder (Outros casos não são importantes)
-- [ ] Adicionar tupla
-- [ ] Obter tupla
-- [ ] Obter tupla async?
-- [ ] Ler tupla sem remover
-
-### Client
-- [ ] Definir o que vai ser
-- [ ] Comunicação com o espaço de tuplas
+- [ ] espaço de tuplas
+    - [ ] obter tupla
+    - [ ] obter e remover tupla
+    - [ ] adicionar tupla
+    - [ ] obter todas as tuplas (pra debugar)
+    - [ ] usar uma Trie ao invés de uma ArrayList? (O pior caso ainda é n^2, mas o resto tende a ser melhor.)
+- [ ] Comunicação do cliente com o espaço de tuplas
+- [ ] script de testes
+    - [ ] adicionar servidor ao espaço de tuplas
+    - [ ] remover servidor ao espaço de tuplas
+    - [ ] simular falha por colapso
