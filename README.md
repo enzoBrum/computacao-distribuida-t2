@@ -5,6 +5,9 @@ make server # levanta uma instância do espaço de tuplas
 make client # levanta um client.
 ```
 
+P.S: BFT-SNART parece ser um **pouco** mais tranquilo que jgroups, mas em compensação, é um saco de rodar já que tem que configurar tudo 
+manualmente. Como o jgroups-raft faz praticamente a mesma coisa que ela, da pra continuar com ele
+
 ## TODO
 
 - [x] Como rodar jgroups no docker?
