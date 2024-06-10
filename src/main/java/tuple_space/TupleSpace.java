@@ -48,7 +48,7 @@ public class TupleSpace implements StateMachine {
                 default -> null;
             };
 
-            if (!serialize_response)
+            if (!serialize_response || result == null)
                 return null;
 
         }
