@@ -18,7 +18,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>tuple_space.TupleSpaceServer</mainClass>
+                  <mainClass>tuple_space.RaftTupleSpaceServer</mainClass>
                 </transformer>
               </transformers>
             </configuration>

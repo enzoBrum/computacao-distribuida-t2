@@ -12,6 +12,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jgroups.raft.StateMachine;
+import org.jgroups.util.Util;
 
 public class TupleSpace implements StateMachine {
     private static final Logger logger = LogManager.getLogger(TupleSpace.class);
@@ -31,39 +32,29 @@ public class TupleSpace implements StateMachine {
 
     public byte[] apply(byte[] data, int offset, int length, boolean serialize_response) throws Exception {
         Object result = null;
-        try (var byteStream = new ByteArrayInputStream(data, offset, length);
-                var objectStream = new ObjectInputStream(byteStream)) {
+        Command cmd = Util.objectFromByteBuffer(data, offset, length);
 
-            Command cmd = (Command) objectStream.readObject();
+        logger.debug("Command received: {}", cmd.getHeader().toString());
+        result = switch (cmd.getHeader()) {
+            case GET -> this.get(cmd.getTuple());
+            case GET_ALL -> this.tuples;
+            case READ -> this.read(cmd.getTuple());
+            case WRITE -> {
+                this.write(cmd.getTuple());
+                yield null;
+            }
+            default -> null;
+        };
 
-            logger.debug("Command received: %s", cmd.getHeader().toString());
-            result = switch (cmd.getHeader()) {
-                case GET -> this.get(cmd.getTuple());
-                case GET_ALL -> this.tuples;
-                case READ -> this.read(cmd.getTuple());
-                case WRITE -> {
-                    this.write(cmd.getTuple());
-                    yield null;
-                }
-                default -> null;
-            };
-
-            if (!serialize_response || result == null)
-                return null;
-
-        }
-        try (var byteStream = new ByteArrayOutputStream(); var objectStream = new ObjectOutputStream(byteStream)) {
-            objectStream.writeObject(result);
-            return byteStream.toByteArray();
-        }
+        return serialize_response && result != null ? Util.objectToByteBuffer(result) : null;
     }
 
     public void readContentFrom(DataInput in) throws Exception {
-
+        tuples = Util.objectFromStream(in);
     }
 
     public void writeContentTo(DataOutput out) throws Exception {
-
+        Util.objectToStream(tuples, out);
     }
 
     public void write(Object[] tuple) throws Exception {

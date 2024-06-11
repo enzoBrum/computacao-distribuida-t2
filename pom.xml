@@ -37,9 +37,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.jgroups</groupId>
-            <artifactId>jgroups-raft</artifactId>
-            <version>1.0.13.Final</version>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.23.1</version>
         </dependency>
     </dependencies>
         <build>
@@ -58,7 +58,7 @@
                             <transformers>
                                 <transformer
                                     implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>tuple_space.TupleSpaceServer</mainClass>
+                                    <mainClass>tuple_space.RaftTupleSpaceServer</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
