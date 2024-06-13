@@ -10,4 +10,4 @@ COPY src src
 
 RUN mvn clean package
 
-CMD [ "java", "-Dlog4j.configurationFile=src/main/resources/log4j2.xml", "-Draft_id=${RAFT_ID}", "-jar", "target/espaco-tuplas-1.0-SNAPSHOT.jar" ]
+CMD [ "java","-Dlog4j.configurationFile=src/main/resources/log4j2.xml", "-jar", "target/espaco-tuplas-1.0-SNAPSHOT.jar" ]

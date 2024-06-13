@@ -17,6 +17,7 @@ manualmente. Como o jgroups-raft faz praticamente a mesma coisa que ela, da pra 
     - [ ] adicionar tupla
     - [ ] obter todas as tuplas (pra debugar)
     - [ ] usar uma Trie ao invés de uma ArrayList? (O pior caso ainda é n^2, mas o resto tende a ser melhor.)
+- [ ] Apenas fazer bind no localhost (-Djgroups.bind_addr=127.0.0.1 -Djava.net.preferIPv4Stack=true)
 - [ ] Comunicação do cliente com o espaço de tuplas
 - [ ] script de testes
     - [ ] adicionar servidor ao espaço de tuplas
