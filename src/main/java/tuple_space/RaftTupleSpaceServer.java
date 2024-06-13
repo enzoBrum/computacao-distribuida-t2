@@ -38,13 +38,14 @@ public class RaftTupleSpaceServer implements Receiver {
 
             this.raftHandle.addRoleListener(role -> logger.debug("Changed role to " + role));
 
-            var addr = InetAddress.getByName(System.getProperty("client_addr"));
-            var port = Integer.parseInt(System.getProperty("client_port"));
+            var addr = InetAddress.getByName(System.getenv("client_addr"));
+            var port = Integer.parseInt(System.getenv("client_port"));
 
             logger.info("Listening for client connections at " + addr.toString() + " " + port);
             server = new TcpServer(addr, port).receiver(this);
             JmxConfigurator.register(server, Util.getMBeanServer(), "tuple-space:name=tuple-space");
         } catch (Exception e) {
+            e.printStackTrace();
             logger.error(e);
         }
     }

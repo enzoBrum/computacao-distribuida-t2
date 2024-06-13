@@ -40,17 +40,28 @@ parser.add_argument(
     help="Port for the CLIENT interface. This is the port to where the client program should connect to."
 )
 
+parser.add_argument(
+    "--print-docker-run",
+    help="Print the command used to run docker",
+    action="store_true"
+)
+
 args = parser.parse_args()
 container_tag = "computacao-distribuida-tuple-spaces"
 
 
 if args.build:
-    subprocess.run(f"docker build -t {container_tag} {os.path.dirname(__file__)}", shell=True)
+    subprocess.run(f"docker build -t {container_tag} {os.path.dirname(__file__)}", shell=True, check=True)
 
 
 env_vars = []
 for name in ("raft_id", "client_port", "client_addr"):
     if getattr(args, name) is not None:
         env_vars.append((name, getattr(args, name)))
+
+cmd = f"docker run {' '.join([f'-e {name}={value}' for name, value in env_vars])} -it --rm --network=host {container_tag}"
+
+if args.print_docker_run:
+    print(cmd)
 
 subprocess.run(f"docker run {' '.join([f'-e {name}={value}' for name, value in env_vars])} -it --rm --network=host {container_tag}", shell=True)
