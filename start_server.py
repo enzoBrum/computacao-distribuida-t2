@@ -31,13 +31,13 @@ parser.add_argument(
     "--client-addr",
     metavar="addr",
     type=str,
-    help="Address for the CLIENT interface. This is the address to where the client program should connect to."
+    help="Address for the CLIENT interface. This is the address to where the client program should connect to. Defaults to 127.0.0.1"
 )
 parser.add_argument(
     "--client-port",
     metavar="port",
     type=int,
-    help="Port for the CLIENT interface. This is the port to where the client program should connect to."
+    help="Port for the CLIENT interface. This is the port to where the client program should connect to. Defaults to 0 (i.e: random)"
 )
 
 parser.add_argument(
