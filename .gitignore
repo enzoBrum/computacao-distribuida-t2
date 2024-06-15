@@ -5,3 +5,4 @@ target
 .settings/
 
 server_executable
+tuple-space-storage
