@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option go_package = "./tuple-spaces";
+message Tuple {
+        repeated string values = 1;
+}
+
+message TupleSpace {
+        repeated Tuple tuples = 2;
+}
+
+enum Command {
+        GET = 0;
+        READ = 1;
+        WRITE = 2;
+        READ_ALL = 3;
+}
+
+message RequestData {
+        Command cmd = 1;
+        Tuple tuple = 2;
+}
