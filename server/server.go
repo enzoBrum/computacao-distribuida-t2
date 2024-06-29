@@ -48,8 +48,10 @@ func handleRead(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		if !ok {
-			fmt.Println("Lookup did not return *Tuple")
-			w.WriteHeader(http.StatusInternalServerError)
+			fmt.Println("Lookup did not return *Tuple. Assuming tuple is not found")
+
+			emptyTuple := []byte("[]")
+			w.Write(emptyTuple)
 			return
 		}
 

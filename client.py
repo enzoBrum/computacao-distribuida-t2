@@ -3,8 +3,9 @@
 # <tuple-space-address>/read
 # <tuple-space-address>/all
 # <tuple-space-address>/
-import requests
 import json
+
+import requests
 
 def run():    
 
@@ -26,24 +27,35 @@ def run():
             case '2':
                 response = requests.post(url=f"{server_adress}/read", data=json.dumps(ask_input(False)))
                 data = response_status(response)
+                print("="*10)
                 if data:
                     print(f"Aluno recebido: {response.json()}")
+                else:
+                    print("Aluno não encontrado")
             case '3':
                 response = requests.get(url=f"{server_adress}/get", data=json.dumps(ask_input(False)))
                 data = response_status(response)
+                print("="*10)
                 if data:
                     print(f"Aluno removido: {response.json()}")
+                else:
+                    print("Aluno não encontrado")
             case '4':
                 response = requests.get(url=f"{server_adress}/all")
                 data = response_status(response)
+                print("="*10)
                 if data:
                     print(f"Lista de alunos: {response.json()}")
+                else:
+                    print("Não há tuplas no servidor")
             case '5':
                 server_adress = choose_server()
             case '6':
                 break
             case _:
                 print("Opção inválida.")
+
+        print("="*10)
 
 def response_status(response: int) -> str | None:
     if response.status_code == 200:
