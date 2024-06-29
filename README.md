@@ -1,19 +1,30 @@
-Use esses dois comandos.
+Para compilar  o projeto, use:
 ```bash
-make build # builda os contâineres
-make server # levanta uma instância do espaço de tuplas
-make client # levanta um client.
+make compile-server
 ```
 
-P.S: BFT-SNART parece ser um **pouco** mais tranquilo que jgroups, mas em compensação, é um saco de rodar já que tem que configurar tudo 
-manualmente. Como o jgroups-raft faz praticamente a mesma coisa que ela, da pra continuar com ele
+O projeto é organizado em uma arquitetura cliente-servidor, onde o cliente é uma aplicação de cadastro de alunos e o
+servidor é um nó de um Cluster Raft que implementa uma máquina de estados replicada que serve como um espaço de tuplas.
 
-## TODO
+Para rodar o servidor, use o comando:
+```bash
+./server_executable -nodeid x
+```
 
-- [x] espaço de tuplas
-    - [x] obter tupla
-    - [x] obter e remover tupla
-    - [x] adicionar tupla
-    - [x] obter todas as tuplas (pra debugar)
-- [x] Apenas fazer bind no localhost (-Djgroups.bind_addr=127.0.0.1 -Djava.net.preferIPv4Stack=true)
-- [x] Comunicação do cliente com o espaço de tuplas
+onde `x` é um número no intervalo [1,5].
+É necessário iniciar ao menos 3 servidores para que o sistema funcione corretamente.
+
+Caso deseje iniciar todos os servidores ao mesmo tempo, pode use:
+```bash
+./server_executable -nodeid 1 &
+./server_executable -nodeid 2 &
+./server_executable -nodeid 3 &
+./server_executable -nodeid 4 &
+./server_executable -nodeid 5 &
+```
+
+
+Para iniciar o cliente, use:
+```bash
+python client.py
+```
